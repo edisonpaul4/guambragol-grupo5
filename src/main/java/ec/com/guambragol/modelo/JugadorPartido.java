@@ -6,42 +6,50 @@
 package ec.com.guambragol.modelo;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author carlosballadares
  */
 @Entity
-@Table(name = "JugadorPartidfo")
+@Table(name = "JugadorPartido")
 @NamedQueries({
-    @NamedQuery(name = "JugadorPartidfo.findAll", query = "SELECT j FROM JugadorPartidfo j"),
-    @NamedQuery(name = "JugadorPartidfo.findByIdJugadorPartidfo", query = "SELECT j FROM JugadorPartidfo j WHERE j.idJugadorPartidfo = :idJugadorPartidfo")})
-public class JugadorPartidfo implements Serializable {
+    @NamedQuery(name = "JugadorPartido.findAll", query = "SELECT j FROM JugadorPartido j"),
+    @NamedQuery(name = "JugadorPartido.findByIdJugadorPartidfo", query = "SELECT j FROM JugadorPartido j WHERE j.idJugadorPartidfo = :idJugadorPartidfo")})
+public class JugadorPartido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idJugadorPartidfo")
     private Integer idJugadorPartidfo;
     @JoinColumn(name = "idJugador", referencedColumnName = "idJugador")
     @ManyToOne
     private Jugador idJugador;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJugadorEntra")
+    private List<Cambios> cambiosList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJugadorSale")
+    private List<Cambios> cambiosList1;
 
-    public JugadorPartidfo() {
+    public JugadorPartido() {
     }
 
-    public JugadorPartidfo(Integer idJugadorPartidfo) {
+    public JugadorPartido(Integer idJugadorPartidfo) {
         this.idJugadorPartidfo = idJugadorPartidfo;
     }
 
@@ -61,6 +69,22 @@ public class JugadorPartidfo implements Serializable {
         this.idJugador = idJugador;
     }
 
+    public List<Cambios> getCambiosList() {
+        return cambiosList;
+    }
+
+    public void setCambiosList(List<Cambios> cambiosList) {
+        this.cambiosList = cambiosList;
+    }
+
+    public List<Cambios> getCambiosList1() {
+        return cambiosList1;
+    }
+
+    public void setCambiosList1(List<Cambios> cambiosList1) {
+        this.cambiosList1 = cambiosList1;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -71,10 +95,10 @@ public class JugadorPartidfo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof JugadorPartidfo)) {
+        if (!(object instanceof JugadorPartido)) {
             return false;
         }
-        JugadorPartidfo other = (JugadorPartidfo) object;
+        JugadorPartido other = (JugadorPartido) object;
         if ((this.idJugadorPartidfo == null && other.idJugadorPartidfo != null) || (this.idJugadorPartidfo != null && !this.idJugadorPartidfo.equals(other.idJugadorPartidfo))) {
             return false;
         }
@@ -83,7 +107,7 @@ public class JugadorPartidfo implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.com.guambragol.modelo.JugadorPartidfo[ idJugadorPartidfo=" + idJugadorPartidfo + " ]";
+        return "ec.com.guambragol.modelo.JugadorPartido[ idJugadorPartidfo=" + idJugadorPartidfo + " ]";
     }
     
 }

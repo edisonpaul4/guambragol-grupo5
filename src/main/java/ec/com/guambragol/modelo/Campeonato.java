@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -40,8 +42,8 @@ public class Campeonato implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idCampeonato")
     private Integer idCampeonato;
     @Basic(optional = false)
@@ -59,11 +61,13 @@ public class Campeonato implements Serializable {
     @Column(name = "fechaFin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCampeonato")
-    private List<DetalleFechaCampeonao> detalleFechaCampeonaoList;
     @JoinColumn(name = "idLiga", referencedColumnName = "idLiga")
     @ManyToOne(optional = false)
     private Liga idLiga;
+    @OneToMany(mappedBy = "idCampeonato")
+    private List<DetalleFechaCampeonao> detalleFechaCampeonaoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCampeonato")
+    private List<DetalleFechaCampeonato> detalleFechaCampeonatoList;
 
     public Campeonato() {
     }
@@ -111,6 +115,14 @@ public class Campeonato implements Serializable {
         this.fechaFin = fechaFin;
     }
 
+    public Liga getIdLiga() {
+        return idLiga;
+    }
+
+    public void setIdLiga(Liga idLiga) {
+        this.idLiga = idLiga;
+    }
+
     public List<DetalleFechaCampeonao> getDetalleFechaCampeonaoList() {
         return detalleFechaCampeonaoList;
     }
@@ -119,12 +131,12 @@ public class Campeonato implements Serializable {
         this.detalleFechaCampeonaoList = detalleFechaCampeonaoList;
     }
 
-    public Liga getIdLiga() {
-        return idLiga;
+    public List<DetalleFechaCampeonato> getDetalleFechaCampeonatoList() {
+        return detalleFechaCampeonatoList;
     }
 
-    public void setIdLiga(Liga idLiga) {
-        this.idLiga = idLiga;
+    public void setDetalleFechaCampeonatoList(List<DetalleFechaCampeonato> detalleFechaCampeonatoList) {
+        this.detalleFechaCampeonatoList = detalleFechaCampeonatoList;
     }
 
     @Override

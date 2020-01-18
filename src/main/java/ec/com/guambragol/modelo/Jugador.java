@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -34,8 +36,8 @@ public class Jugador implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idJugador")
     private Integer idJugador;
     @Basic(optional = false)
@@ -45,23 +47,25 @@ public class Jugador implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJugador")
     private List<Carnet> carnetList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJugador")
+    private List<SancionesPartidos> sancionesPartidosList;
+    @OneToMany(mappedBy = "idJugador")
+    private List<JugadorPartido> jugadorPartidoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJugador")
     private List<GolesPartido> golesPartidoList;
-    @JoinColumn(name = "idPerosna", referencedColumnName = "idPersona")
+    @JoinColumn(name = "idPosicion", referencedColumnName = "idPosicion")
     @ManyToOne(optional = false)
-    private Persona idPerosna;
-    @JoinColumn(name = "idposicion", referencedColumnName = "idPosicion")
-    @ManyToOne(optional = false)
-    private Posicion idposicion;
-    @JoinColumn(name = "idTipoJugador", referencedColumnName = "idTipoJugador")
-    @ManyToOne(optional = false)
-    private TipoJugador idTipoJugador;
+    private Posicion idPosicion;
     @JoinColumn(name = "idClub", referencedColumnName = "idClub")
     @ManyToOne(optional = false)
     private Club idClub;
+    @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
+    @ManyToOne(optional = false)
+    private Persona idPersona;
+    @JoinColumn(name = "idTipoJugador", referencedColumnName = "idTipoJugador")
+    @ManyToOne(optional = false)
+    private TipoJugador idTipoJugador;
     @OneToMany(mappedBy = "idJugador")
     private List<JugadorPartidfo> jugadorPartidfoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idJugador")
-    private List<SancionesPartidos> sancionesPartidosList;
 
     public Jugador() {
     }
@@ -99,6 +103,22 @@ public class Jugador implements Serializable {
         this.carnetList = carnetList;
     }
 
+    public List<SancionesPartidos> getSancionesPartidosList() {
+        return sancionesPartidosList;
+    }
+
+    public void setSancionesPartidosList(List<SancionesPartidos> sancionesPartidosList) {
+        this.sancionesPartidosList = sancionesPartidosList;
+    }
+
+    public List<JugadorPartido> getJugadorPartidoList() {
+        return jugadorPartidoList;
+    }
+
+    public void setJugadorPartidoList(List<JugadorPartido> jugadorPartidoList) {
+        this.jugadorPartidoList = jugadorPartidoList;
+    }
+
     public List<GolesPartido> getGolesPartidoList() {
         return golesPartidoList;
     }
@@ -107,28 +127,12 @@ public class Jugador implements Serializable {
         this.golesPartidoList = golesPartidoList;
     }
 
-    public Persona getIdPerosna() {
-        return idPerosna;
+    public Posicion getIdPosicion() {
+        return idPosicion;
     }
 
-    public void setIdPerosna(Persona idPerosna) {
-        this.idPerosna = idPerosna;
-    }
-
-    public Posicion getIdposicion() {
-        return idposicion;
-    }
-
-    public void setIdposicion(Posicion idposicion) {
-        this.idposicion = idposicion;
-    }
-
-    public TipoJugador getIdTipoJugador() {
-        return idTipoJugador;
-    }
-
-    public void setIdTipoJugador(TipoJugador idTipoJugador) {
-        this.idTipoJugador = idTipoJugador;
+    public void setIdPosicion(Posicion idPosicion) {
+        this.idPosicion = idPosicion;
     }
 
     public Club getIdClub() {
@@ -139,20 +143,28 @@ public class Jugador implements Serializable {
         this.idClub = idClub;
     }
 
+    public Persona getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Persona idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public TipoJugador getIdTipoJugador() {
+        return idTipoJugador;
+    }
+
+    public void setIdTipoJugador(TipoJugador idTipoJugador) {
+        this.idTipoJugador = idTipoJugador;
+    }
+
     public List<JugadorPartidfo> getJugadorPartidfoList() {
         return jugadorPartidfoList;
     }
 
     public void setJugadorPartidfoList(List<JugadorPartidfo> jugadorPartidfoList) {
         this.jugadorPartidfoList = jugadorPartidfoList;
-    }
-
-    public List<SancionesPartidos> getSancionesPartidosList() {
-        return sancionesPartidosList;
-    }
-
-    public void setSancionesPartidosList(List<SancionesPartidos> sancionesPartidosList) {
-        this.sancionesPartidosList = sancionesPartidosList;
     }
 
     @Override

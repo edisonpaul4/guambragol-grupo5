@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -36,8 +38,8 @@ public class FechaPartido implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idFechaPartido")
     private Integer idFechaPartido;
     @Basic(optional = false)
@@ -52,8 +54,10 @@ public class FechaPartido implements Serializable {
     private Date fechaFin;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFechaPartido")
     private List<Partidos> partidosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFechaPartido")
+    @OneToMany(mappedBy = "idFechaPartido")
     private List<DetalleFechaCampeonao> detalleFechaCampeonaoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idFechaPartido")
+    private List<DetalleFechaCampeonato> detalleFechaCampeonatoList;
 
     public FechaPartido() {
     }
@@ -106,6 +110,14 @@ public class FechaPartido implements Serializable {
 
     public void setDetalleFechaCampeonaoList(List<DetalleFechaCampeonao> detalleFechaCampeonaoList) {
         this.detalleFechaCampeonaoList = detalleFechaCampeonaoList;
+    }
+
+    public List<DetalleFechaCampeonato> getDetalleFechaCampeonatoList() {
+        return detalleFechaCampeonatoList;
+    }
+
+    public void setDetalleFechaCampeonatoList(List<DetalleFechaCampeonato> detalleFechaCampeonatoList) {
+        this.detalleFechaCampeonatoList = detalleFechaCampeonatoList;
     }
 
     @Override

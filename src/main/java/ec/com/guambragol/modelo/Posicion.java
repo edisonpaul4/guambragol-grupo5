@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -33,8 +35,8 @@ public class Posicion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idPosicion")
     private Integer idPosicion;
     @Basic(optional = false)
@@ -42,7 +44,7 @@ public class Posicion implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "posicion")
     private String posicion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idposicion")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPosicion")
     private List<Jugador> jugadorList;
 
     public Posicion() {

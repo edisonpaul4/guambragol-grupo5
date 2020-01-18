@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -35,8 +37,8 @@ public class Arbitro implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idArbitro")
     private Integer idArbitro;
     @Basic(optional = false)
@@ -44,11 +46,13 @@ public class Arbitro implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "Gremio")
     private String gremio;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArbitro")
-    private List<Partidos> partidosList;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
     @ManyToOne(optional = false)
     private Persona idPersona;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArbitro")
+    private List<InformeArbitro> informeArbitroList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idArbitro")
+    private List<Partidos> partidosList;
 
     public Arbitro() {
     }
@@ -78,20 +82,28 @@ public class Arbitro implements Serializable {
         this.gremio = gremio;
     }
 
-    public List<Partidos> getPartidosList() {
-        return partidosList;
-    }
-
-    public void setPartidosList(List<Partidos> partidosList) {
-        this.partidosList = partidosList;
-    }
-
     public Persona getIdPersona() {
         return idPersona;
     }
 
     public void setIdPersona(Persona idPersona) {
         this.idPersona = idPersona;
+    }
+
+    public List<InformeArbitro> getInformeArbitroList() {
+        return informeArbitroList;
+    }
+
+    public void setInformeArbitroList(List<InformeArbitro> informeArbitroList) {
+        this.informeArbitroList = informeArbitroList;
+    }
+
+    public List<Partidos> getPartidosList() {
+        return partidosList;
+    }
+
+    public void setPartidosList(List<Partidos> partidosList) {
+        this.partidosList = partidosList;
     }
 
     @Override

@@ -11,6 +11,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -33,21 +34,21 @@ public class Directiva implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idDirectiva")
     private Integer idDirectiva;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDirectiva")
     private List<Liga> ligaList;
+    @JoinColumn(name = "idClub", referencedColumnName = "idClub")
+    @ManyToOne(optional = false)
+    private Club idClub;
     @JoinColumn(name = "idCargo", referencedColumnName = "idCargo")
     @ManyToOne(optional = false)
     private Cargo idCargo;
     @JoinColumn(name = "idPersona", referencedColumnName = "idPersona")
     @ManyToOne(optional = false)
     private Persona idPersona;
-    @JoinColumn(name = "idClub", referencedColumnName = "idClub")
-    @ManyToOne(optional = false)
-    private Club idClub;
 
     public Directiva() {
     }
@@ -72,6 +73,14 @@ public class Directiva implements Serializable {
         this.ligaList = ligaList;
     }
 
+    public Club getIdClub() {
+        return idClub;
+    }
+
+    public void setIdClub(Club idClub) {
+        this.idClub = idClub;
+    }
+
     public Cargo getIdCargo() {
         return idCargo;
     }
@@ -86,14 +95,6 @@ public class Directiva implements Serializable {
 
     public void setIdPersona(Persona idPersona) {
         this.idPersona = idPersona;
-    }
-
-    public Club getIdClub() {
-        return idClub;
-    }
-
-    public void setIdClub(Club idClub) {
-        this.idClub = idClub;
     }
 
     @Override

@@ -9,42 +9,43 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  *
  * @author carlosballadares
  */
 @Entity
-@Table(name = "DetalleFechaCampeonao")
+@Table(name = "DetalleFechaCampeonato")
 @NamedQueries({
-    @NamedQuery(name = "DetalleFechaCampeonao.findAll", query = "SELECT d FROM DetalleFechaCampeonao d"),
-    @NamedQuery(name = "DetalleFechaCampeonao.findByIdDetalleFechaCampeonao", query = "SELECT d FROM DetalleFechaCampeonao d WHERE d.idDetalleFechaCampeonao = :idDetalleFechaCampeonao")})
-public class DetalleFechaCampeonao implements Serializable {
+    @NamedQuery(name = "DetalleFechaCampeonato.findAll", query = "SELECT d FROM DetalleFechaCampeonato d"),
+    @NamedQuery(name = "DetalleFechaCampeonato.findByIdDetalleFechaCampeonao", query = "SELECT d FROM DetalleFechaCampeonato d WHERE d.idDetalleFechaCampeonao = :idDetalleFechaCampeonao")})
+public class DetalleFechaCampeonato implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idDetalleFechaCampeonao")
     private Integer idDetalleFechaCampeonao;
     @JoinColumn(name = "idCampeonato", referencedColumnName = "idCampeonato")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Campeonato idCampeonato;
     @JoinColumn(name = "idFechaPartido", referencedColumnName = "idFechaPartido")
-    @ManyToOne
+    @ManyToOne(optional = false)
     private FechaPartido idFechaPartido;
 
-    public DetalleFechaCampeonao() {
+    public DetalleFechaCampeonato() {
     }
 
-    public DetalleFechaCampeonao(Integer idDetalleFechaCampeonao) {
+    public DetalleFechaCampeonato(Integer idDetalleFechaCampeonao) {
         this.idDetalleFechaCampeonao = idDetalleFechaCampeonao;
     }
 
@@ -82,10 +83,10 @@ public class DetalleFechaCampeonao implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof DetalleFechaCampeonao)) {
+        if (!(object instanceof DetalleFechaCampeonato)) {
             return false;
         }
-        DetalleFechaCampeonao other = (DetalleFechaCampeonao) object;
+        DetalleFechaCampeonato other = (DetalleFechaCampeonato) object;
         if ((this.idDetalleFechaCampeonao == null && other.idDetalleFechaCampeonao != null) || (this.idDetalleFechaCampeonao != null && !this.idDetalleFechaCampeonao.equals(other.idDetalleFechaCampeonao))) {
             return false;
         }
@@ -94,7 +95,7 @@ public class DetalleFechaCampeonao implements Serializable {
 
     @Override
     public String toString() {
-        return "ec.com.guambragol.modelo.DetalleFechaCampeonao[ idDetalleFechaCampeonao=" + idDetalleFechaCampeonao + " ]";
+        return "ec.com.guambragol.modelo.DetalleFechaCampeonato[ idDetalleFechaCampeonao=" + idDetalleFechaCampeonao + " ]";
     }
     
 }

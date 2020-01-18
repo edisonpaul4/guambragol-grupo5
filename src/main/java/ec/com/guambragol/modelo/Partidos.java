@@ -12,6 +12,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,8 +44,8 @@ public class Partidos implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idPartidos")
     private Integer idPartidos;
     @Basic(optional = false)
@@ -68,27 +70,27 @@ public class Partidos implements Serializable {
     @NotNull
     @Column(name = "golesVisitante")
     private int golesVisitante;
-    @JoinColumn(name = "idCancha", referencedColumnName = "idCancha")
-    @ManyToOne(optional = false)
-    private Cancha idCancha;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPartido")
+    private List<SancionesPartidos> sancionesPartidosList;
     @JoinColumn(name = "idArbitro", referencedColumnName = "idArbitro")
     @ManyToOne(optional = false)
     private Arbitro idArbitro;
     @JoinColumn(name = "idClubLocal", referencedColumnName = "idClub")
     @ManyToOne(optional = false)
     private Club idClubLocal;
-    @JoinColumn(name = "idClubVisitante", referencedColumnName = "idClub")
+    @JoinColumn(name = "idCancha", referencedColumnName = "idCancha")
     @ManyToOne(optional = false)
-    private Club idClubVisitante;
+    private Cancha idCancha;
     @JoinColumn(name = "idFechaPartido", referencedColumnName = "idFechaPartido")
     @ManyToOne(optional = false)
     private FechaPartido idFechaPartido;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPartido")
-    private List<GolesPartido> golesPartidoList;
+    @JoinColumn(name = "idClubVisitante", referencedColumnName = "idClub")
+    @ManyToOne(optional = false)
+    private Club idClubVisitante;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPartidos")
+    private List<InformeVocal> informeVocalList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPartido")
     private List<TablaPosiciones> tablaPosicionesList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPartido")
-    private List<SancionesPartidos> sancionesPartidosList;
 
     public Partidos() {
     }
@@ -154,12 +156,12 @@ public class Partidos implements Serializable {
         this.golesVisitante = golesVisitante;
     }
 
-    public Cancha getIdCancha() {
-        return idCancha;
+    public List<SancionesPartidos> getSancionesPartidosList() {
+        return sancionesPartidosList;
     }
 
-    public void setIdCancha(Cancha idCancha) {
-        this.idCancha = idCancha;
+    public void setSancionesPartidosList(List<SancionesPartidos> sancionesPartidosList) {
+        this.sancionesPartidosList = sancionesPartidosList;
     }
 
     public Arbitro getIdArbitro() {
@@ -178,12 +180,12 @@ public class Partidos implements Serializable {
         this.idClubLocal = idClubLocal;
     }
 
-    public Club getIdClubVisitante() {
-        return idClubVisitante;
+    public Cancha getIdCancha() {
+        return idCancha;
     }
 
-    public void setIdClubVisitante(Club idClubVisitante) {
-        this.idClubVisitante = idClubVisitante;
+    public void setIdCancha(Cancha idCancha) {
+        this.idCancha = idCancha;
     }
 
     public FechaPartido getIdFechaPartido() {
@@ -194,12 +196,20 @@ public class Partidos implements Serializable {
         this.idFechaPartido = idFechaPartido;
     }
 
-    public List<GolesPartido> getGolesPartidoList() {
-        return golesPartidoList;
+    public Club getIdClubVisitante() {
+        return idClubVisitante;
     }
 
-    public void setGolesPartidoList(List<GolesPartido> golesPartidoList) {
-        this.golesPartidoList = golesPartidoList;
+    public void setIdClubVisitante(Club idClubVisitante) {
+        this.idClubVisitante = idClubVisitante;
+    }
+
+    public List<InformeVocal> getInformeVocalList() {
+        return informeVocalList;
+    }
+
+    public void setInformeVocalList(List<InformeVocal> informeVocalList) {
+        this.informeVocalList = informeVocalList;
     }
 
     public List<TablaPosiciones> getTablaPosicionesList() {
@@ -208,14 +218,6 @@ public class Partidos implements Serializable {
 
     public void setTablaPosicionesList(List<TablaPosiciones> tablaPosicionesList) {
         this.tablaPosicionesList = tablaPosicionesList;
-    }
-
-    public List<SancionesPartidos> getSancionesPartidosList() {
-        return sancionesPartidosList;
-    }
-
-    public void setSancionesPartidosList(List<SancionesPartidos> sancionesPartidosList) {
-        this.sancionesPartidosList = sancionesPartidosList;
     }
 
     @Override

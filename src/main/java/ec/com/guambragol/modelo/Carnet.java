@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -37,8 +39,8 @@ public class Carnet implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "idCarnet")
     private Integer idCarnet;
     @Basic(optional = false)
@@ -56,12 +58,12 @@ public class Carnet implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "foto")
     private String foto;
-    @JoinColumn(name = "idDisciplina", referencedColumnName = "idDisciplina")
-    @ManyToOne(optional = false)
-    private Disciplina idDisciplina;
     @JoinColumn(name = "idJugador", referencedColumnName = "idJugador")
     @ManyToOne(optional = false)
     private Jugador idJugador;
+    @JoinColumn(name = "idDisciplina", referencedColumnName = "idDisciplina")
+    @ManyToOne(optional = false)
+    private Disciplina idDisciplina;
 
     public Carnet() {
     }
@@ -109,20 +111,20 @@ public class Carnet implements Serializable {
         this.foto = foto;
     }
 
-    public Disciplina getIdDisciplina() {
-        return idDisciplina;
-    }
-
-    public void setIdDisciplina(Disciplina idDisciplina) {
-        this.idDisciplina = idDisciplina;
-    }
-
     public Jugador getIdJugador() {
         return idJugador;
     }
 
     public void setIdJugador(Jugador idJugador) {
         this.idJugador = idJugador;
+    }
+
+    public Disciplina getIdDisciplina() {
+        return idDisciplina;
+    }
+
+    public void setIdDisciplina(Disciplina idDisciplina) {
+        this.idDisciplina = idDisciplina;
     }
 
     @Override
