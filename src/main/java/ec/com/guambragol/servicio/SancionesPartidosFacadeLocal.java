@@ -16,15 +16,20 @@ import javax.ejb.Local;
 @Local
 public interface SancionesPartidosFacadeLocal {
 
-    void create(SancionesPartidos sancionesPartidos);
+    void create();
 
-    void edit(SancionesPartidos sancionesPartidos);
+    void edit();
 
-    void remove(SancionesPartidos sancionesPartidos);
+    void remove();
 
     SancionesPartidos find(Object id);
 
     List<SancionesPartidos> findAll();
+    List<SancionesPartidos> findBySancionName();
+    List<SancionesPartidos> findByPlayerName();
+    List<String> getNombresSanciones();
+
+
 
     List<SancionesPartidos> findRange(int[] range);
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <head>
+        <title>Sancionar jugador</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <style type="text/css">
+            .ui-datatable {
+                margin-bottom: 25px
+            }
+
+            .ui-datatable .ui-datatable-header {
+                text-align: right !important;
+            }
+
+            .ui-button-text-only .ui-button-text {
+                padding: 0.3em 0.4em;
+            }
+
+            .ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+                visibility: hidden;
+            }
+
+            .ui-filter-column .ui-column-customfilter .custom-filter {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .year-spinner input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <h:body>
+
+        <ui:composition template="/plantillas/plantillaAdmin.xhtml">
+            <ui:define name="content">
+                <h:form prependId="false" id="form">
+
+
+                    <p:fieldset legend="Sección de Sanciones">
+                        <h3 style="center" align="center"></h3>
+
+                        <p:dataTable 
+
+                            id ="SancionesPartidoId"
+                            var="SancionesPartido" 
+                            value="#{SancionesPartidosService.findAll()}"
+                            widgetVar="SancionesPartidoTable"
+                            selectionMode="single"
+                            rowKey="#{SancionesPartido.idSancionesPartidos}">
+                            >
+
+                            <f:facet name="header">  
+                                <p:outputPanel>
+                                    <h:outputText value="Buscar en todos los campos:" />
+                                    <p:inputText id="globalFilter" onkeyup="PF('SancionesPartidoTable').filter()" style="width:150px" placeholder="Introduzca una palabra clave"/>
+                                </p:outputPanel>                            </f:facet>
+                            <p:column  filterBy="#{SancionesPartido.idSancionesPartidos}" headerText="Id" footerText="Contiene" filterMatchMode="contains">
+
+                                <h:outputText value="#{SancionesPartido.idSancionesPartidos}" />
+                            </p:column>
+
+                            <p:column filterBy="#{SancionesPartido.idJugador.idPersona.apellidoPat}" headerText="Apellido Jugador" footerText="Contiene" filterMatchMode="contains">
+                                <h:outputText value="#{SancionesPartido.idJugador.idPersona.apellidoPat}" />
+                            </p:column>
+
+                            <p:column filterBy="#{SancionesPartido.idJugador.idPersona.primerNom}" headerText="Nombre Jugador" footerText="Contiene" filterMatchMode="contains">
+                                <h:outputText value="#{SancionesPartido.idJugador.idPersona.primerNom}" />
+                            </p:column>
+
+                            <p:column filterBy="#{SancionesPartido.idSanciones.idSanciones}" headerText="idSanción" footerText="Contiene" filterMatchMode="contains">
+                                <h:outputText value="#{SancionesPartido.idSanciones.idSanciones}" />
+                            </p:column>
+                            <p:column filterBy="#{SancionesPartido.idSanciones.nombreSancion}" headerText="Tipo Sanción" footerText="Contiene" filterMatchMode="exact">
+                                <f:facet name="filter">
+                                    <p:selectOneMenu onchange="PF('SancionesPartidoTable').filter()" styleClass="custom-filter">
+                                        <f:selectItem itemLabel="Seleccione un elemento." itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems value="#{SancionesPartidosService.nombresSanciones}"  />
+                                    </p:selectOneMenu>
+                                </f:facet>
+                                <h:outputText value="#{SancionesPartido.idSanciones.nombreSancion}" />
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton value="Regresar" action="/paginas/inicio.xhtml"  />
+                                <p:spacer height="5px;"/>
+                                <p:commandButton value="Agregar" >
+                                    <p:ajax event="dialogReturn" update="SancionesPartidoId"/>
+                                </p:commandButton>
+                            </f:facet>
+
+
+                        </p:dataTable>
+                        <p:contextMenu for="SancionesPartidoId">
+                            <p:menuitem value="Eliminar" update="SancionesPartidoId" icon="ui-icon-close" actionListener="#{SancionesPartidosService.remove()}" ajax="false"/>
+                        </p:contextMenu>
+                    </p:fieldset>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+
+    </h:body>
+</html>

@@ -25,6 +25,8 @@ public interface SancionesFacadeLocal {
     Sanciones find(Object id);
 
     List<Sanciones> findAll();
+    
+
 
     List<Sanciones> findRange(int[] range);
 

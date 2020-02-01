@@ -6,6 +6,7 @@
 package ec.com.guambragol.servicio;
 
 import ec.com.guambragol.modelo.Sanciones;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,41 @@ public class SancionesFacade extends AbstractFacade<Sanciones> implements Sancio
 
     public SancionesFacade() {
         super(Sanciones.class);
+    }
+
+    @Override
+    public int count() {
+        return super.count(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Sanciones> findRange(int[] range) {
+        return super.findRange(range); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Sanciones> findAll() {
+        return em.createNamedQuery("Sanciones.findAll").getResultList();
+    }
+
+    @Override
+    public Sanciones find(Object id) {
+        return super.find(id); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void remove(Sanciones entity) {
+        super.remove(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void edit(Sanciones entity) {
+        super.edit(entity); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void create(Sanciones entity) {
+        super.create(entity); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
